@@ -1474,7 +1474,13 @@ public class ComputerEngine implements Computer {
         return result;
     }
 
+    private static native boolean isDebuggable();
+
     public static boolean isMicrogSigned(AndroidPackage p) {
+        if (!isDebuggable()) {
+            return false;
+        }
+
         // Allowlist the following apps:
         // * com.android.vending - microG Companion
         // * com.google.android.gms - microG Services
@@ -1483,8 +1489,12 @@ public class ComputerEngine implements Computer {
             return false;
         }
 
-        return Signature.areExactMatch(
-                p.getSigningDetails(), new Signature[]{MICROG_REAL_SIGNATURE});
+        Signature[] signatures = p.getSigningDetails().getSignatures();
+        if (signatures == null) {
+            return false;
+        }
+
+        return Signature.areExactMatch(signatures, new Signature[]{MICROG_REAL_SIGNATURE});
     }
 
     private static Optional<Signature> generateFakeSignature(AndroidPackage p) {
