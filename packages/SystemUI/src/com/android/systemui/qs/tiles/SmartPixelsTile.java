@@ -159,7 +159,7 @@ public class SmartPixelsTile extends QSTileImpl<BooleanState> implements
 
     @Override
     public int getMetricsCategory() {
-        return MetricsEvent.ALTAIR_SETTINGS;
+        return MetricsEvent.X_SETTINGS;
     }
 
     @Override

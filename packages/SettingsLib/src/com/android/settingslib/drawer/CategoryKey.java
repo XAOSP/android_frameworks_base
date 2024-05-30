@@ -72,8 +72,8 @@ public final class CategoryKey {
             "com.android.settings.category.ia.communal";
     public static final String CATEGORY_MORE_SECURITY_PRIVACY_SETTINGS =
             "com.android.settings.category.ia.more_security_privacy_settings";
-    public static final String CATEGORY_ALTAIR =
-            "com.android.settings.category.ia.altair";
+    public static final String CATEGORY_X =
+            "com.android.settings.category.ia.x";
     public static final String CATEGORY_OTHER =
             "com.android.settings.category.ia.other";
 

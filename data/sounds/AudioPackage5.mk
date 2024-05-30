@@ -30,7 +30,7 @@ PRODUCT_COPY_FILES += \
 	$(LOCAL_PATH)/effects/Unlock.ogg:$(TARGET_COPY_OUT_PRODUCT)/media/audio/ui/Unlock.ogg \
 	$(LOCAL_PATH)/effects/ogg/Trusted.ogg:$(TARGET_COPY_OUT_PRODUCT)/media/audio/ui/Trusted.ogg \
 	$(LOCAL_PATH)/notifications/Aldebaran.ogg:$(TARGET_COPY_OUT_PRODUCT)/media/audio/notifications/Aldebaran.ogg \
-	$(LOCAL_PATH)/notifications/Altair.ogg:$(TARGET_COPY_OUT_PRODUCT)/media/audio/notifications/Altair.ogg \
+	$(LOCAL_PATH)/notifications/X.ogg:$(TARGET_COPY_OUT_PRODUCT)/media/audio/notifications/X.ogg \
 	$(LOCAL_PATH)/notifications/Antares.ogg:$(TARGET_COPY_OUT_PRODUCT)/media/audio/notifications/Antares.ogg \
 	$(LOCAL_PATH)/notifications/arcturus.ogg:$(TARGET_COPY_OUT_PRODUCT)/media/audio/notifications/arcturus.ogg \
 	$(LOCAL_PATH)/notifications/Betelgeuse.ogg:$(TARGET_COPY_OUT_PRODUCT)/media/audio/notifications/Betelgeuse.ogg \

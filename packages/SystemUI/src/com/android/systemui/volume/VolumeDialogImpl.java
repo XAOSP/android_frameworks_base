@@ -127,7 +127,7 @@ import com.android.internal.graphics.drawable.BackgroundBlurDrawable;
 import com.android.internal.jank.InteractionJankMonitor;
 import com.android.internal.view.RotationPolicy;
 import com.android.settingslib.Utils;
-import com.android.settingslib.media.flags.Flags;
+import com.android.systemui.Dependency;
 import com.android.systemui.Dumpable;
 import com.android.systemui.Prefs;
 import com.android.systemui.dump.DumpManager;
@@ -268,11 +268,9 @@ public class VolumeDialogImpl implements VolumeDialog, Dumpable,
     private CaptionsToggleImageButton mODICaptionsIcon;
     private View mSettingsView;
     private ImageButton mSettingsIcon;
-    private View mExpandRowsView;
-    private ExpandableIndicator mExpandRows;
     private View mAppVolumeView;
     private ImageButton mAppVolumeIcon;
-    private String mAppVolumeActivePackageName;
+    private FrameLayout mZenIcon;
     private final List<VolumeRow> mRows = new ArrayList<>();
     private ConfigurableTexts mConfigurableTexts;
     private final SparseBooleanArray mDynamic = new SparseBooleanArray();
@@ -791,34 +789,8 @@ public class VolumeDialogImpl implements VolumeDialog, Dumpable,
         mSettingsView = mDialog.findViewById(R.id.settings_container);
         mSettingsIcon = mDialog.findViewById(R.id.settings);
 
-        mRoundedBorderBottom = mDialog.findViewById(R.id.rounded_border_bottom);
-
-        mExpandRowsView = mDialog.findViewById(R.id.expandable_indicator_container);
-        mExpandRows = mDialog.findViewById(R.id.expandable_indicator);
-
         mAppVolumeView = mDialog.findViewById(R.id.app_volume_container);
         mAppVolumeIcon = mDialog.findViewById(R.id.app_volume);
-
-        if (isWindowGravityLeft()) {
-            ViewGroup container = mDialog.findViewById(R.id.volume_dialog_container);
-            setGravity(container, Gravity.LEFT);
-
-            setGravity(mDialogView, Gravity.LEFT);
-
-            setGravity((ViewGroup) mTopContainer, Gravity.LEFT);
-
-            setLayoutGravity(mRingerDrawerNewSelectionBg, Gravity.BOTTOM | Gravity.LEFT);
-
-            setLayoutGravity(mSelectedRingerContainer, Gravity.BOTTOM | Gravity.LEFT);
-
-            setGravity(mRinger, Gravity.LEFT);
-
-            setGravity(mDialogRowsViewContainer, Gravity.LEFT);
-
-            setGravity(mODICaptionsView, Gravity.LEFT);
-
-            mExpandRows.setRotation(-90);
-        }
 
         if (mRows.isEmpty()) {
             if (!AudioSystem.isSingleVolume(mContext)) {
@@ -1467,15 +1439,14 @@ public class VolumeDialogImpl implements VolumeDialog, Dumpable,
         ContentResolver cr = mContext.getContentResolver();
         int showAppVolume = Settings.System.getInt(cr, Settings.System.SHOW_APP_VOLUME, 0);
         boolean ret = showAppVolume == 1;
-        mAppVolumeActivePackageName = null;
+
         if (ret) {
             ret = false;
             AudioManager audioManager = mController.getAudioManager();
             for (AppVolume av : audioManager.listAppVolumes()) {
                 if (av.isActive()) {
                     ret = true;
-                    mAppVolumeActivePackageName = av.getPackageName();
-                    break;
+            break;
                 }
             }
         }
@@ -1500,18 +1471,12 @@ public class VolumeDialogImpl implements VolumeDialog, Dumpable,
         if (mAppVolumeIcon != null) {
             mAppVolumeIcon.setOnClickListener(v -> {
                 Events.writeEvent(Events.EVENT_SETTINGS_CLICK);
+                Intent intent = new Intent(Settings.Panel.ACTION_APP_VOLUME);
                 dismissH(DISMISS_REASON_SETTINGS_CLICKED);
-                mMediaOutputDialogFactory.dismiss();
-                mActivityStarter.startActivity(new Intent(Settings.Panel.ACTION_APP_VOLUME),
+                Dependency.get(MediaOutputDialogFactory.class).dismiss();
+                Dependency.get(ActivityStarter.class).startActivity(intent,
                         true /* dismissShade */);
             });
-            Drawable icon = mAppVolumeActivePackageName != null ?
-                    getApplicationIcon(mAppVolumeActivePackageName) : null;
-            if (icon != null) {
-                mAppVolumeIcon.setImageTintList(null);
-                mAppVolumeIcon.setScaleType(ImageView.ScaleType.FIT_CENTER);
-                mAppVolumeIcon.setImageDrawable(icon);
-            }
         }
     }
 

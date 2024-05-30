@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2014 The Android Open Source Project
- *           (C) 2021-2023 Altair ROM Project
+ *           (C) 2021-2023 XAOSP Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -142,6 +142,6 @@ public class AudioModeTile extends QSTileImpl<BooleanState> {
 
     @Override
     public int getMetricsCategory() {
-        return MetricsEvent.ALTAIR_SETTINGS;
+        return MetricsEvent.X_SETTINGS;
     }
 }

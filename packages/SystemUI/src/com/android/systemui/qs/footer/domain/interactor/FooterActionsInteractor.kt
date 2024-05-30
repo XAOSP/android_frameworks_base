@@ -195,7 +195,7 @@ constructor(
 
         val intent = Intent()
         intent.setClassName("com.android.settings",
-                "com.android.settings.Settings\$AltairSettingsActivity")
+                "com.android.settings.Settings\$XSettingsActivity")
         activityStarter.startActivity(
             intent,
             true /* dismissShade */,
